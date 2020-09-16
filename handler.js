@@ -69,7 +69,11 @@ module.exports.updateUser = async event => {
   try {
     await connectDB()
 
-    const user = await User.findByIdAndUpdate(event.pathParameters.id, event.body)
+    const user = await User.findByIdAndUpdate(event.pathParameters.id, JSON.parse(event.body),
+      {
+        new: true,
+        runValidators: true
+      })
 
     return {
       statusCode: 200,
